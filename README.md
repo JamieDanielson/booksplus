@@ -1,3 +1,5 @@
+Next step: [Write book reviews with Markdown](https://developer.mongodb.com/how-to/gatsby-modern-blog#writing-book-reviews-with-markdown)
+
 <!-- AUTO-GENERATED-CONTENT:START (STARTER) -->
 <p align="center">
   <a href="https://www.gatsbyjs.org">
