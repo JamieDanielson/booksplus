@@ -1,22 +1,42 @@
-import React from "react"
-import { Link } from "gatsby"
+import React from 'react';
+import { Link } from 'gatsby';
+import { graphql } from 'gatsby';
 
-import Layout from "../components/layout"
-import Image from "../components/image"
-import SEO from "../components/seo"
+import Layout from '../components/layout';
 
-const IndexPage = () => (
-  <Layout>
-    <SEO title="Home" />
-    <h1>Hi people</h1>
-    <p>Welcome to your new Gatsby site.</p>
-    <p>Now go build something great.</p>
-    <div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
-      <Image />
-    </div>
-    <Link to="/page-2/">Go to page 2</Link> <br />
-    <Link to="/using-typescript/">Go to "Using TypeScript"</Link>
-  </Layout>
-)
+const IndexPage = props => {
+  const books = props.data.allMongodbBooksplusBooks.edges;
 
-export default IndexPage
+  return (
+    <Layout>
+      <div className="book-container">
+        {books.map(book => (
+          <div className="book">
+            {book.node.thumbnailUrl && (
+              <Link to={`/book/` + book.node.id}>
+                <img src={book.node.thumbnailUrl} alt="book" />
+              </Link>
+            )}
+          </div>
+        ))}
+      </div>
+    </Layout>
+  );
+};
+
+export default IndexPage;
+
+export const pageQuery = graphql`
+  query {
+    allMongodbBooksplusBooks {
+      edges {
+        node {
+          id
+          title
+          shortDescription
+          thumbnailUrl
+        }
+      }
+    }
+  }
+`;

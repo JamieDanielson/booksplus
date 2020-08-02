@@ -1,7 +1,29 @@
-/**
- * Implement Gatsby's Node APIs in this file.
- *
- * See: https://www.gatsbyjs.org/docs/node-apis/
- */
+const path = require('path');
 
-// You can delete this file if you're not using it
+exports.createPages = async ({ graphql, actions }) => {
+  const { createPage } = actions;
+
+  const { data } = await graphql(`
+    {
+      books: allMongodbBooksplusBooks {
+        edges {
+          node {
+            id
+          }
+        }
+      }
+    }
+  `);
+
+  const pageTemplate = path.resolve(`./src/components/book.js`);
+
+  for (const { node } of data.books.edges) {
+    createPage({
+      path: `/book/${node.id}/`,
+      component: pageTemplate,
+      context: {
+        id: node.id,
+      },
+    });
+  }
+};
