@@ -1,3 +1,7 @@
+require("dotenv").config({
+  path: `.env.${process.env.NODE_ENV}`,
+})
+
 module.exports = {
   siteMetadata: {
     title: `Gatsby Default Starter`,
@@ -25,6 +29,23 @@ module.exports = {
         theme_color: `#663399`,
         display: `minimal-ui`,
         icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
+      },
+    },
+    {
+      // The name of the plugin
+      resolve: "gatsby-source-mongodb",
+      options: {
+        // Name of the database and collection where are books reside
+        dbName: "booksplus",
+        collection: "books",
+        server: {
+          address: process.env.SERVER_ADDRESS,
+          port: process.env.PORT,
+        },
+        auth: {
+          user: process.env.DB_USER,
+          password: process.env.DB_PW,
+        },
       },
     },
     // this (optional) plugin enables Progressive Web App + Offline functionality
