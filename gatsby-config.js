@@ -46,6 +46,12 @@ module.exports = {
           user: process.env.DB_USER,
           password: process.env.DB_PW,
         },
+        extraParams: {
+          replicaSet: "booksplus-shard-0",
+          ssl: true,
+          authSource: "admin",
+          retryWrites: true,
+        },
       },
     },
     // this (optional) plugin enables Progressive Web App + Offline functionality
